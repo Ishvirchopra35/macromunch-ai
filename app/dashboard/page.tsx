@@ -400,8 +400,57 @@ function DashboardContent() {
     return <div className="min-h-screen bg-black" />
   }
 
+  function getTimedSuggestions(): string[] {
+    const hour = new Date().getHours()
+
+    if (hour >= 5 && hour < 10) {
+      // Morning
+      return [
+        'What should I have for breakfast?',
+        'Give me a high protein morning meal',
+        'Quick breakfast under 400 calories'
+      ]
+    } else if (hour >= 10 && hour < 12) {
+      // Mid morning
+      return [
+        "What's a good pre-workout snack?",
+        'I need a light mid-morning meal',
+        'High protein snack ideas'
+      ]
+    } else if (hour >= 12 && hour < 15) {
+      // Lunch
+      return [
+        'What should I have for lunch?',
+        'Give me a high protein lunch',
+        'Quick lunch under 500 calories'
+      ]
+    } else if (hour >= 15 && hour < 18) {
+      // Afternoon
+      return [
+        "What's a good post-workout meal?",
+        'Afternoon snack that hits my macros',
+        'I need something quick and filling'
+      ]
+    } else if (hour >= 18 && hour < 21) {
+      // Dinner
+      return [
+        'What should I make for dinner tonight?',
+        "High protein dinner with what's in my fridge",
+        'Plan the rest of my meals for today'
+      ]
+    } else {
+      // Late night
+      return [
+        "Late night snack that won't ruin my macros",
+        'How close am I to hitting my goals today?',
+        "Plan tomorrow's meals for me"
+      ]
+    }
+  }
+
   const firstName = profile?.full_name?.split(' ')[0] ?? 'there'
   const remainingMessages = Math.max(0, 10 - todayMessageCount)
+  const suggestions = getTimedSuggestions()
 
   return (
     <div className="flex min-h-screen flex-row bg-black text-white">
@@ -583,19 +632,15 @@ function DashboardContent() {
                 about meals, recipes, or nutrition.
               </p>
 
+              <p className="mb-3 text-xs text-zinc-600">Suggested for right now</p>
               <div className="mt-4 flex flex-wrap justify-center gap-2">
-                {[
-                  'What can I make for breakfast?',
-                  'Give me a high protein lunch',
-                  'Plan my meals for today'
-                ].map((prompt) => (
+                {suggestions.map((suggestion, index) => (
                   <button
-                    key={prompt}
-                    type="button"
-                    onClick={() => submitQuickPrompt(prompt)}
+                    key={index}
+                    onClick={() => { setInput(suggestion) }}
                     className="bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-zinc-600 rounded-lg px-4 py-2 text-sm cursor-pointer text-zinc-300 transition-colors"
                   >
-                    {prompt}
+                    {suggestion}
                   </button>
                 ))}
               </div>

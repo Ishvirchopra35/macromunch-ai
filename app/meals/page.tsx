@@ -72,14 +72,16 @@ export default function MealsPage() {
       </nav>
 
       <main className="mx-auto max-w-4xl px-6 py-10 pt-24">
-        <h1 className="text-3xl font-black">🍽️ Saved Meals</h1>
+        <h1 className="text-3xl font-black">Saved Meals</h1>
         <p className="mt-1 mb-8 text-zinc-400">Your personal recipe library</p>
 
         {loading ? (
           <div className="mt-20 text-center text-zinc-400">Loading your meals...</div>
         ) : meals.length === 0 ? (
           <div className="mt-20">
-            <p className="text-center text-6xl">🍽️</p>
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-zinc-700">
+              <span className="text-xl text-zinc-600">+</span>
+            </div>
             <h2 className="mt-4 text-center text-xl font-bold">No saved meals yet</h2>
             <p className="mx-auto mt-2 max-w-sm text-center text-zinc-400">
               When MacroMunch suggests a recipe you love, hit &apos;+ Save this meal&apos; to add it
@@ -106,23 +108,27 @@ export default function MealsPage() {
 
                 <div className="mt-2 flex flex-wrap gap-2">
                   {meal.calories ? (
-                    <span className="rounded-full bg-blue-500/20 px-2 py-1 text-xs text-blue-400">
-                      🔥 {meal.calories} cal
+                    <span className="rounded-md bg-zinc-800 px-2 py-1 text-xs text-zinc-300">
+                      <span className="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-blue-400" />
+                      {meal.calories} cal
                     </span>
                   ) : null}
                   {meal.protein ? (
-                    <span className="rounded-full bg-emerald-500/20 px-2 py-1 text-xs text-emerald-400">
-                      🥩 {meal.protein}g protein
+                    <span className="rounded-md bg-zinc-800 px-2 py-1 text-xs text-zinc-300">
+                      <span className="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                      {meal.protein}g protein
                     </span>
                   ) : null}
                   {meal.carbs ? (
-                    <span className="rounded-full bg-yellow-500/20 px-2 py-1 text-xs text-yellow-400">
-                      🍚 {meal.carbs}g carbs
+                    <span className="rounded-md bg-zinc-800 px-2 py-1 text-xs text-zinc-300">
+                      <span className="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-yellow-400" />
+                      {meal.carbs}g carbs
                     </span>
                   ) : null}
                   {meal.fat ? (
-                    <span className="rounded-full bg-orange-500/20 px-2 py-1 text-xs text-orange-400">
-                      🥑 {meal.fat}g fat
+                    <span className="rounded-md bg-zinc-800 px-2 py-1 text-xs text-zinc-300">
+                      <span className="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-orange-400" />
+                      {meal.fat}g fat
                     </span>
                   ) : null}
                 </div>
