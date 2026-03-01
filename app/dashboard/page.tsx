@@ -32,6 +32,10 @@ function DashboardContent() {
   const [loading, setLoading] = useState(false)
   const [isInitializing, setIsInitializing] = useState(true)
   const [upgradeToast, setUpgradeToast] = useState(false)
+  const [loggedCalories, setLoggedCalories] = useState(0)
+  const [loggedProtein, setLoggedProtein] = useState(0)
+  const [loggedCarbs, setLoggedCarbs] = useState(0)
+  const [loggedFat, setLoggedFat] = useState(0)
   const messageCount = todayMessageCount
 
   const todayDate = new Date().toISOString().split('T')[0]
@@ -209,6 +213,20 @@ function DashboardContent() {
     isUpgradeNotice: true
   })
 
+  const extractMacrosFromMessage = (content: string) => {
+    const caloriesMatch = content.match(/(\d+)\s*(cal|kcal|calories)/i)
+    const proteinMatch = content.match(/(\d+)g\s*protein/i)
+    const carbsMatch = content.match(/(\d+)g\s*(carbs|carbohydrates)/i)
+    const fatMatch = content.match(/(\d+)g\s*fat/i)
+
+    return {
+      calories: caloriesMatch ? Number(caloriesMatch[1]) : 0,
+      protein: proteinMatch ? Number(proteinMatch[1]) : 0,
+      carbs: carbsMatch ? Number(carbsMatch[1]) : 0,
+      fat: fatMatch ? Number(fatMatch[1]) : 0
+    }
+  }
+
   const handleSend = async (overrideMessage?: string) => {
     const messageText = (overrideMessage ?? input).trim()
 
@@ -262,6 +280,12 @@ function DashboardContent() {
     const assistantText =
       data?.response ?? data?.reply ?? data?.message ?? 'I had trouble generating a response.'
 
+    const extractedMacros = extractMacrosFromMessage(assistantText)
+    setLoggedCalories((prev) => prev + extractedMacros.calories)
+    setLoggedProtein((prev) => prev + extractedMacros.protein)
+    setLoggedCarbs((prev) => prev + extractedMacros.carbs)
+    setLoggedFat((prev) => prev + extractedMacros.fat)
+
     const assistantMessage: ChatMessage = {
       id: `assistant-${Date.now()}`,
       role: 'assistant',
@@ -313,23 +337,78 @@ function DashboardContent() {
 
         <div className="border-b border-zinc-800 p-4">
           <p className="mb-3 text-xs text-zinc-500">TODAY&apos;S TARGETS</p>
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span className="text-zinc-400">🔥 Calories</span>
-              <span className="font-medium text-white">{profile?.daily_calories ?? 2000} kcal</span>
+          <div>
+            <div>
+              <div className="mb-1 flex justify-between text-xs">
+                <span className="text-zinc-400">🔥 Calories</span>
+                <span className="text-white">{loggedCalories} / {profile?.daily_calories ?? 2000}</span>
+              </div>
+              <div
+                className={`w-full rounded-full h-1.5 mt-1 mb-3 ${loggedCalories > (profile?.daily_calories ?? 2000) ? 'bg-red-950' : 'bg-zinc-800'}`}
+              >
+                <div
+                  className={`${loggedCalories > (profile?.daily_calories ?? 2000) ? 'bg-red-500' : 'bg-blue-500'} h-1.5 rounded-full transition-all duration-300`}
+                  style={{ width: `${Math.min((loggedCalories / (profile?.daily_calories ?? 2000)) * 100, 100)}%` }}
+                />
+              </div>
             </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-zinc-400">🥩 Protein</span>
-              <span className="font-medium text-white">{profile?.daily_protein ?? 150}g</span>
+
+            <div>
+              <div className="mb-1 flex justify-between text-xs">
+                <span className="text-zinc-400">🥩 Protein</span>
+                <span className="text-white">{loggedProtein} / {profile?.daily_protein ?? 150}</span>
+              </div>
+              <div
+                className={`w-full rounded-full h-1.5 mt-1 mb-3 ${loggedProtein > (profile?.daily_protein ?? 150) ? 'bg-red-950' : 'bg-zinc-800'}`}
+              >
+                <div
+                  className={`${loggedProtein > (profile?.daily_protein ?? 150) ? 'bg-red-500' : 'bg-emerald-500'} h-1.5 rounded-full transition-all duration-300`}
+                  style={{ width: `${Math.min((loggedProtein / (profile?.daily_protein ?? 150)) * 100, 100)}%` }}
+                />
+              </div>
             </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-zinc-400">🍚 Carbs</span>
-              <span className="font-medium text-white">{profile?.daily_carbs ?? 200}g</span>
+
+            <div>
+              <div className="mb-1 flex justify-between text-xs">
+                <span className="text-zinc-400">🍚 Carbs</span>
+                <span className="text-white">{loggedCarbs} / {profile?.daily_carbs ?? 200}</span>
+              </div>
+              <div
+                className={`w-full rounded-full h-1.5 mt-1 mb-3 ${loggedCarbs > (profile?.daily_carbs ?? 200) ? 'bg-red-950' : 'bg-zinc-800'}`}
+              >
+                <div
+                  className={`${loggedCarbs > (profile?.daily_carbs ?? 200) ? 'bg-red-500' : 'bg-yellow-500'} h-1.5 rounded-full transition-all duration-300`}
+                  style={{ width: `${Math.min((loggedCarbs / (profile?.daily_carbs ?? 200)) * 100, 100)}%` }}
+                />
+              </div>
             </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-zinc-400">🥑 Fat</span>
-              <span className="font-medium text-white">{profile?.daily_fat ?? 65}g</span>
+
+            <div>
+              <div className="mb-1 flex justify-between text-xs">
+                <span className="text-zinc-400">🥑 Fat</span>
+                <span className="text-white">{loggedFat} / {profile?.daily_fat ?? 65}</span>
+              </div>
+              <div
+                className={`w-full rounded-full h-1.5 mt-1 mb-3 ${loggedFat > (profile?.daily_fat ?? 65) ? 'bg-red-950' : 'bg-zinc-800'}`}
+              >
+                <div
+                  className={`${loggedFat > (profile?.daily_fat ?? 65) ? 'bg-red-500' : 'bg-orange-500'} h-1.5 rounded-full transition-all duration-300`}
+                  style={{ width: `${Math.min((loggedFat / (profile?.daily_fat ?? 65)) * 100, 100)}%` }}
+                />
+              </div>
             </div>
+
+            <button
+              onClick={() => {
+                setLoggedCalories(0)
+                setLoggedProtein(0)
+                setLoggedCarbs(0)
+                setLoggedFat(0)
+              }}
+              className="text-zinc-600 hover:text-zinc-400 text-xs mt-1"
+            >
+              Reset today
+            </button>
           </div>
         </div>
 
