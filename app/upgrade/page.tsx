@@ -82,7 +82,7 @@ export default function UpgradePage() {
         >
           ← Back
         </span>
-        <p className="gradient-text font-bold">MacroMunch AI</p>
+        <p className="text-white font-bold">MacroMunch AI</p>
         <div className="w-12" />
       </nav>
 

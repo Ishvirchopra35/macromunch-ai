@@ -150,7 +150,7 @@ export default function SettingsPage() {
         >
           ← Dashboard
         </span>
-        <p className="gradient-text font-bold">MacroMunch AI</p>
+        <p className="text-white font-bold">MacroMunch AI</p>
         <button
           type="button"
           onClick={handleSaveChanges}
@@ -195,19 +195,16 @@ export default function SettingsPage() {
             {[
               {
                 value: 'cut',
-                emoji: '🔥',
                 title: 'Lose Fat',
                 desc: 'Cut calories, preserve muscle'
               },
               {
                 value: 'maintain',
-                emoji: '⚖️',
                 title: 'Stay Lean',
                 desc: 'Maintain weight and performance'
               },
               {
                 value: 'bulk',
-                emoji: '💪',
                 title: 'Build Muscle',
                 desc: 'Surplus calories, maximize gains'
               }
@@ -223,7 +220,6 @@ export default function SettingsPage() {
                     selected ? 'border-emerald-500 bg-emerald-500/10' : 'border-zinc-800'
                   }`}
                 >
-                  <p className="text-xl">{option.emoji}</p>
                   <p className="mt-2 text-sm font-semibold text-white">{option.title}</p>
                   <p className="mt-1 text-xs text-zinc-400">{option.desc}</p>
                 </button>
@@ -307,9 +303,9 @@ export default function SettingsPage() {
           <p className="mb-4 text-xs font-semibold tracking-widest text-zinc-500">COOKING SKILL</p>
           <div className="grid grid-cols-3 gap-3">
             {[
-              { value: 'beginner', emoji: '🥄', label: 'Beginner' },
-              { value: 'intermediate', emoji: '👨‍🍳', label: 'Intermediate' },
-              { value: 'advanced', emoji: '⭐', label: 'Advanced' }
+              { value: 'beginner', label: 'Beginner' },
+              { value: 'intermediate', label: 'Intermediate' },
+              { value: 'advanced', label: 'Advanced' }
             ].map((option) => {
               const selected = cookingSkill === option.value
 
@@ -322,7 +318,6 @@ export default function SettingsPage() {
                     selected ? 'border-emerald-500 bg-emerald-500/10' : 'border-zinc-800'
                   }`}
                 >
-                  <p className="text-xl">{option.emoji}</p>
                   <p className="mt-2 text-sm font-semibold text-white">{option.label}</p>
                 </button>
               )

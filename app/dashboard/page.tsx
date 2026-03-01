@@ -360,7 +360,7 @@ function DashboardContent() {
     <div className="flex min-h-screen flex-row bg-black text-white">
       <aside className="fixed top-0 left-0 flex h-screen w-64 flex-col border-r border-zinc-800 bg-zinc-900">
         <div className="border-b border-zinc-800 p-4">
-          <p className="gradient-text text-lg font-bold">MacroMunch AI</p>
+          <p className="text-white text-lg font-bold">MacroMunch AI</p>
         </div>
 
         <div className="border-b border-zinc-800 p-4">
@@ -368,7 +368,7 @@ function DashboardContent() {
           <div>
             <div>
               <div className="mb-1 flex justify-between text-xs">
-                <span className="text-zinc-400">🔥 Calories</span>
+                <span className="text-zinc-400">Calories</span>
                 <span className="text-white">{loggedCalories} / {profile?.daily_calories ?? 2000}</span>
               </div>
               <div
@@ -383,7 +383,7 @@ function DashboardContent() {
 
             <div>
               <div className="mb-1 flex justify-between text-xs">
-                <span className="text-zinc-400">🥩 Protein</span>
+                <span className="text-zinc-400">Protein</span>
                 <span className="text-white">{loggedProtein} / {profile?.daily_protein ?? 150}</span>
               </div>
               <div
@@ -398,7 +398,7 @@ function DashboardContent() {
 
             <div>
               <div className="mb-1 flex justify-between text-xs">
-                <span className="text-zinc-400">🍚 Carbs</span>
+                <span className="text-zinc-400">Carbs</span>
                 <span className="text-white">{loggedCarbs} / {profile?.daily_carbs ?? 200}</span>
               </div>
               <div
@@ -413,7 +413,7 @@ function DashboardContent() {
 
             <div>
               <div className="mb-1 flex justify-between text-xs">
-                <span className="text-zinc-400">🥑 Fat</span>
+                <span className="text-zinc-400">Fat</span>
                 <span className="text-white">{loggedFat} / {profile?.daily_fat ?? 65}</span>
               </div>
               <div
@@ -485,10 +485,10 @@ function DashboardContent() {
             Sign Out
           </button>
           <a href="/meals" className="text-zinc-400 hover:text-white text-sm mt-1 block">
-            🍽️ Saved Meals
+            Saved Meals
           </a>
           <Link href="/settings" className="mt-1 block text-sm text-zinc-400 hover:text-white">
-            ⚙️ Settings
+            Settings
           </Link>
 
           {isPro ? (
@@ -535,15 +535,15 @@ function DashboardContent() {
 
               <div className="mt-4 flex flex-wrap justify-center gap-2">
                 {[
-                  '🍳 What can I make for breakfast?',
-                  '💪 High protein lunch ideas',
-                  '📋 Plan my meals for today'
+                  'What can I make for breakfast?',
+                  'Give me a high protein lunch',
+                  'Plan my meals for today'
                 ].map((prompt) => (
                   <button
                     key={prompt}
                     type="button"
                     onClick={() => submitQuickPrompt(prompt)}
-                    className="cursor-pointer rounded-full border border-zinc-700 bg-zinc-800 px-4 py-2 text-sm text-zinc-300 hover:bg-zinc-700"
+                    className="bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-zinc-600 rounded-lg px-4 py-2 text-sm cursor-pointer text-zinc-300 transition-colors"
                   >
                     {prompt}
                   </button>

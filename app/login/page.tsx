@@ -52,7 +52,7 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-black px-4">
       <div className="w-full max-w-md rounded-2xl border border-zinc-800 bg-zinc-900 p-8">
-        <p className="gradient-text text-2xl font-bold">MacroMunch AI</p>
+        <p className="text-white font-bold">MacroMunch AI</p>
 
         <h1 className="mt-6 text-2xl font-bold text-white">Welcome back</h1>
         <p className="mt-2 text-zinc-400">Sign in to your account</p>

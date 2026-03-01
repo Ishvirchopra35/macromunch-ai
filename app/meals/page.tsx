@@ -67,7 +67,7 @@ export default function MealsPage() {
         >
           ← Dashboard
         </span>
-        <p className="gradient-text font-bold">MacroMunch AI</p>
+        <p className="text-white font-bold">MacroMunch AI</p>
         <div className="w-20" />
       </nav>
 

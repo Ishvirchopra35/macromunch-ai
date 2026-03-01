@@ -8,7 +8,7 @@ export default function TermsPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       <nav className="fixed top-0 right-0 left-0 z-40 flex items-center justify-between border-b border-zinc-800 bg-zinc-900 px-6 py-4">
-        <p className="gradient-text font-bold">MacroMunch AI</p>
+        <p className="text-white font-bold">MacroMunch AI</p>
         <span
           onClick={() => router.push('/')}
           className="cursor-pointer text-sm text-zinc-400 hover:text-white"

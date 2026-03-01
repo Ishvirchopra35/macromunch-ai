@@ -9,25 +9,21 @@ type CookingSkill = 'beginner' | 'intermediate' | 'advanced'
 
 const fitnessGoalOptions: {
   goal: FitnessGoal
-  emoji: string
   title: string
   desc: string
 }[] = [
   {
     goal: 'cut',
-    emoji: '🔥',
     title: 'Lose Fat',
     desc: 'Cut calories, preserve muscle'
   },
   {
     goal: 'maintain',
-    emoji: '⚖️',
     title: 'Stay Lean',
     desc: 'Maintain weight and performance'
   },
   {
     goal: 'bulk',
-    emoji: '💪',
     title: 'Build Muscle',
     desc: 'Surplus calories, maximize gains'
   }
@@ -35,25 +31,21 @@ const fitnessGoalOptions: {
 
 const cookingSkillOptions: {
   skill: CookingSkill
-  emoji: string
   title: string
   desc: string
 }[] = [
   {
     skill: 'beginner',
-    emoji: '🥄',
     title: 'Beginner',
     desc: 'Simple recipes, minimal prep, under 20 mins'
   },
   {
     skill: 'intermediate',
-    emoji: '👨‍🍳',
     title: 'Intermediate',
     desc: 'Comfortable with most techniques, 20-40 mins'
   },
   {
     skill: 'advanced',
-    emoji: '⭐',
     title: 'Advanced',
     desc: 'Enjoy complex recipes, any prep time'
   }
@@ -171,7 +163,7 @@ export default function OnboardingPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="mx-auto max-w-lg px-6 py-12">
-        <p className="gradient-text text-2xl font-bold">MacroMunch AI</p>
+        <p className="text-white font-bold text-xl">MacroMunch AI</p>
 
         <div className="mt-8">
           <div className="mb-2 flex items-center justify-between text-xs text-zinc-400">
@@ -208,7 +200,6 @@ export default function OnboardingPage() {
                           : 'border-zinc-800 bg-zinc-900'
                       }`}
                     >
-                      <span className="text-2xl">{option.emoji}</span>
                       <div>
                         <p className="font-semibold text-white">{option.title}</p>
                         <p className="text-sm text-zinc-400">{option.desc}</p>
@@ -321,7 +312,6 @@ export default function OnboardingPage() {
                           : 'border-zinc-800 bg-zinc-900'
                       }`}
                     >
-                      <span className="text-2xl">{option.emoji}</span>
                       <div>
                         <p className="font-semibold text-white">{option.title}</p>
                         <p className="text-sm text-zinc-400">{option.desc}</p>
