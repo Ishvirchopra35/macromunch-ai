@@ -221,13 +221,13 @@ export default function Home() {
                 <p className="mt-1">Your AI-powered macro chef</p>
               </div>
               <div className="flex items-center gap-6">
-                <Link href="#" className="transition-colors hover:text-zinc-300">
+                <Link href="/privacy" className="transition-colors hover:text-zinc-300">
                   Privacy
                 </Link>
-                <Link href="#" className="transition-colors hover:text-zinc-300">
+                <Link href="/terms" className="transition-colors hover:text-zinc-300">
                   Terms
                 </Link>
-                <Link href="#" className="transition-colors hover:text-zinc-300">
+                <Link href="/contact" className="transition-colors hover:text-zinc-300">
                   Contact
                 </Link>
               </div>

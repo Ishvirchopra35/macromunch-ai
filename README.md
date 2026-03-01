@@ -11,13 +11,19 @@ Built as a full-stack SaaS web app.
 Screenshots
 <div align="center">
 Landing Page
-<img width="1919" alt="Landing page" src="" />
+
+<img width="1919" height="987" alt="image" src="https://github.com/user-attachments/assets/44f5bf7f-3471-4bfb-bb37-f20738a9b199" />
+
 AI-powered landing page with pricing and feature overview
 Onboarding Flow
-<img width="1919" alt="Onboarding" src="" />
+
+<img width="704" height="794" alt="image" src="https://github.com/user-attachments/assets/78d734a7-80bc-4e4d-9ba3-5cd7d9349a3a" />
+
 4-step setup capturing your goals, macros, restrictions, and skill level
 Dashboard & Chat
-<img width="1919" alt="Dashboard" src="" />
+
+<img width="1919" height="987" alt="image" src="https://github.com/user-attachments/assets/05cc7bfd-ba10-403d-b839-b37ba37d8f8b" />
+
 Conversational AI chef with fridge sidebar and macro targets
 </div>
 
