@@ -32,6 +32,7 @@ function DashboardContent() {
   const [loading, setLoading] = useState(false)
   const [isInitializing, setIsInitializing] = useState(true)
   const [upgradeToast, setUpgradeToast] = useState(false)
+  const [savedMealToast, setSavedMealToast] = useState(false)
   const [loggedCalories, setLoggedCalories] = useState(0)
   const [loggedProtein, setLoggedProtein] = useState(0)
   const [loggedCarbs, setLoggedCarbs] = useState(0)
@@ -225,6 +226,33 @@ function DashboardContent() {
       carbs: carbsMatch ? Number(carbsMatch[1]) : 0,
       fat: fatMatch ? Number(fatMatch[1]) : 0
     }
+  }
+
+  const containsMealData = (content: string) => {
+    return /(\d+)\s*(cal|kcal|calories)/i.test(content) && /\d+g\s*protein/i.test(content)
+  }
+
+  async function saveMeal(content: string) {
+    const nameMatch = content.match(/\*\*(.+?)\*\*/) || content.match(/^(.+?)\n/)
+    const calMatch = content.match(/(\d+)\s*(cal|kcal|calories)/i)
+    const proteinMatch = content.match(/(\d+)g\s*protein/i)
+    const carbsMatch = content.match(/(\d+)g\s*(carbs|carbohydrates)/i)
+    const fatMatch = content.match(/(\d+)g\s*fat/i)
+
+    const meal = {
+      user_id: (await supabase.auth.getSession()).data.session?.user.id,
+      name: nameMatch?.[1] ?? 'Saved Meal',
+      recipe: content,
+      calories: calMatch ? parseInt(calMatch[1]) : null,
+      protein: proteinMatch ? parseInt(proteinMatch[1]) : null,
+      carbs: carbsMatch ? parseInt(carbsMatch[1]) : null,
+      fat: fatMatch ? parseInt(fatMatch[1]) : null,
+      ingredients: []
+    }
+
+    await supabase.from('saved_meals').insert(meal)
+    setSavedMealToast(true)
+    setTimeout(() => setSavedMealToast(false), 3000)
   }
 
   const handleSend = async (overrideMessage?: string) => {
@@ -456,6 +484,9 @@ function DashboardContent() {
           >
             Sign Out
           </button>
+          <a href="/meals" className="text-zinc-400 hover:text-white text-sm mt-1 block">
+            🍽️ Saved Meals
+          </a>
           <Link href="/settings" className="mt-1 block text-sm text-zinc-400 hover:text-white">
             ⚙️ Settings
           </Link>
@@ -533,17 +564,28 @@ function DashboardContent() {
                     🥗
                   </div>
                   <div className="max-w-lg whitespace-pre-wrap rounded-2xl rounded-bl-sm bg-zinc-800 px-4 py-3 text-sm text-white">
-                    {message.isUpgradeNotice ? (
-                      <>
-                        You&apos;ve hit your daily limit of 10 messages. Upgrade to
-                        Pro for unlimited access.{` `}
-                        <Link href="/upgrade" className="text-emerald-400 hover:text-emerald-300">
-                          Upgrade Now →
-                        </Link>
-                      </>
-                    ) : (
-                      message.content
-                    )}
+                    <>
+                      {message.isUpgradeNotice ? (
+                        <>
+                          You&apos;ve hit your daily limit of 10 messages. Upgrade to
+                          Pro for unlimited access.{` `}
+                          <Link href="/upgrade" className="text-emerald-400 hover:text-emerald-300">
+                            Upgrade Now →
+                          </Link>
+                        </>
+                      ) : (
+                        message.content
+                      )}
+
+                      {containsMealData(message.content) && (
+                        <button
+                          onClick={() => saveMeal(message.content)}
+                          className="mt-2 text-xs text-emerald-400 hover:text-emerald-300 border border-emerald-800 hover:border-emerald-600 rounded-lg px-3 py-1 transition-colors"
+                        >
+                          + Save this meal
+                        </button>
+                      )}
+                    </>
                   </div>
                 </div>
               )
@@ -594,6 +636,12 @@ function DashboardContent() {
       {upgradeToast && (
         <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-2xl bg-emerald-500 px-6 py-3 text-sm font-bold text-black shadow-lg">
           🎉 Welcome to Pro! All limits removed.
+        </div>
+      )}
+
+      {savedMealToast && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-emerald-500 text-black font-bold px-6 py-3 rounded-2xl shadow-lg z-50 text-sm">
+          Meal saved to your library!
         </div>
       )}
     </div>
