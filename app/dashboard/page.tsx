@@ -228,6 +228,45 @@ function DashboardContent() {
     }
   }
 
+  async function extractAndSaveIngredients(userMessage: string, currentIngredients: any[], userId: string) {
+    // Simple word-based extraction — look for food-like words
+    // Split the message and check against a list of common ingredients
+    const commonIngredients = [
+      'chicken', 'beef', 'pork', 'fish', 'salmon', 'tuna', 'shrimp', 'turkey',
+      'eggs', 'egg', 'rice', 'pasta', 'bread', 'oats', 'quinoa',
+      'broccoli', 'spinach', 'kale', 'lettuce', 'tomato', 'tomatoes', 'onion', 'onions',
+      'garlic', 'potato', 'potatoes', 'carrot', 'carrots', 'cucumber', 'pepper', 'peppers',
+      'milk', 'cheese', 'yogurt', 'butter', 'cream',
+      'apple', 'banana', 'orange', 'berries', 'strawberries', 'blueberries',
+      'almonds', 'peanuts', 'walnuts', 'peanut butter',
+      'olive oil', 'coconut oil', 'avocado',
+      'beans', 'lentils', 'chickpeas', 'tofu',
+      'sweet potato', 'corn', 'mushrooms', 'celery', 'zucchini'
+    ]
+
+    const messageLower = userMessage.toLowerCase()
+    const existingNames = currentIngredients.map((i) => i.name.toLowerCase())
+    const newIngredients: string[] = []
+
+    for (const ingredient of commonIngredients) {
+      if (messageLower.includes(ingredient) && !existingNames.includes(ingredient) && !newIngredients.includes(ingredient)) {
+        newIngredients.push(ingredient)
+      }
+    }
+
+    if (newIngredients.length === 0) return
+
+    const toInsert = newIngredients.map((name) => ({
+      user_id: userId,
+      name: name.charAt(0).toUpperCase() + name.slice(1)
+    }))
+
+    const { data } = await supabase.from('ingredients').insert(toInsert).select()
+    if (data) {
+      setIngredients((prev) => [...prev, ...data])
+    }
+  }
+
   const containsMealData = (content: string) => {
     return /(\d+)\s*(cal|kcal|calories)/i.test(content) && /\d+g\s*protein/i.test(content)
   }
@@ -278,6 +317,14 @@ function DashboardContent() {
 
     setMessages((prev) => [...prev, optimisticUserMessage])
     setInput('')
+
+    const {
+      data: { session }
+    } = await supabase.auth.getSession()
+
+    if (session) {
+      await extractAndSaveIngredients(messageText, ingredients, session.user.id)
+    }
 
     await supabase.from('messages').insert({
       user_id: userId,
@@ -486,6 +533,9 @@ function DashboardContent() {
           </button>
           <a href="/meals" className="text-zinc-400 hover:text-white text-sm mt-1 block">
             Saved Meals
+          </a>
+          <a href="/meal-plan" className="text-zinc-400 hover:text-white text-sm mt-1 block">
+            Meal Plan
           </a>
           <Link href="/settings" className="mt-1 block text-sm text-zinc-400 hover:text-white">
             Settings
