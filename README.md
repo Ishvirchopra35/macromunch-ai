@@ -8,9 +8,18 @@ MacroMunch AI goes beyond a basic recipe app. It learns your **macro targets, fi
 
 Built as a full-stack SaaS web app.
 
-## Screenshots
-
-> Coming soon
+Screenshots
+<div align="center">
+Landing Page
+<img width="1919" alt="Landing page" src="" />
+AI-powered landing page with pricing and feature overview
+Onboarding Flow
+<img width="1919" alt="Onboarding" src="" />
+4-step setup capturing your goals, macros, restrictions, and skill level
+Dashboard & Chat
+<img width="1919" alt="Dashboard" src="" />
+Conversational AI chef with fridge sidebar and macro targets
+</div>
 
 ## Features
 
